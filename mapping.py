@@ -30,8 +30,8 @@ class Mapping:
 
 	def create_mappings(self):
 
-		print "Creating Mapping\n"
-		print "Reading Question Answer"
+		print("Creating Mapping\n")
+		print("Reading Question Answer")
 		
 		ItemsToMaybeKeep 	= {}
 		qa 			= gzip.open(self.QAfile, 'r')
@@ -56,11 +56,11 @@ class Mapping:
 				ItemsToMaybeKeep[item] = 0
 		
 		del qa
-		print "Read Question Answer\n"
+		print("Read Question Answer\n")
 
-		print "Number of Items for which there exists a questions\n", len(ItemsToMaybeKeep)
+		print("Number of Items for which there exists a questions\n", len(ItemsToMaybeKeep))
 
-		print "Reading Reviews"
+		print("Reading Reviews")
 		review = gzip.open(self.ReviewFile, 'r')
 		
 		for l in review:
@@ -78,7 +78,7 @@ class Mapping:
 				ItemsToMaybeKeep[item]+=1
 		
 		del review
-		print "Read Reviews\n"
+		print("Read Reviews\n")
 
 		count 	= 0
 		
@@ -91,7 +91,7 @@ class Mapping:
 		temp_vocab = sorted(self.Vocublary.items(), key = operator.itemgetter(1))
 		
 		if (len(temp_vocab) > 5000):
-			print "Pre-sorting Vocublary length is %d"%(len(temp_vocab))
+			print("Pre-sorting Vocublary length is %d"%(len(temp_vocab)))
 			temp_vocab = temp_vocab[len(temp_vocab)-5000:]
 		
 		self.Vocublary 	= dict(temp_vocab)
@@ -109,13 +109,13 @@ class Mapping:
 		#Uncomment this for printing out the Vocubalary. It was used during different model testing
 		'''
 		for i in range(len(X)-1, -1, -1):
-			print X[i][0]," : ",X[i][1]	
+			print(X[i][0]," : ",X[i][1])
 		'''		
 		
 		if count != self.V:
-			print "\nCount does not equals to Vocublary!!\n"
+			print("\nCount does not equals to Vocublary!!\n")
 
-		print "\nMappings Created\n"
+		print("\nMappings Created\n")
 
 			
 

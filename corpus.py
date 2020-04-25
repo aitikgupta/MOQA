@@ -45,8 +45,8 @@ class Corpus:
 	
 	def construct_QAnswersAndQPerItem(self):
 		
-		print "Creating Question Answer objects\n"
-		print "Reading QA Files"
+		print("Creating Question Answer objects\n")
+		print("Reading QA Files")
 		
 		qa = gzip.open(self.Map.QAfile, 'r')
 		
@@ -71,12 +71,12 @@ class Corpus:
 				self.QPerItem[itemId].append(len(self.QAnswers)-1)
 		
 		del qa
-		print "Read QAfiles\n"
+		print("Read QAfiles\n")
 	
 
 	def construct_SentencesAndSPerItem(self):
-		print "Creating Sentences per Review\n"
-		print "Reading Review Files"
+		print("Creating Sentences per Review\n")
+		print("Reading Review Files")
 		review = gzip.open(self.Map.ReviewFile, 'r')
 		
 		for rjson in review:
@@ -88,7 +88,7 @@ class Corpus:
 				obj    		= ReviewDoc(itemID, reviewText, self.Sentences, self.SPerItem, self.Map.V, self.Map.WordIDMap)
 		
 		del review
-		print "Read Reviews\n"
+		print("Read Reviews\n")
 	
 
 	def Multiprocess_PairWiseFeature(self,itemID):
@@ -134,14 +134,14 @@ class Corpus:
 
 
 	def Calculate_PairWiseFeature(self):
-		print "\n\nStarting pool..."
-		print "Total number of cores found : ",mp
+		print("\n\nStarting pool...")
+		print("Total number of cores found : ",mp)
 		pool = Pool(mp)
 		dicts_ = pool.map(Multiprocess_compute, zip(range(len(self.Map.ItemIDMap)),[self]*(len(self.Map.ItemIDMap))))
 		pool.close()
 		pool.join()
-		print "Stoping pool..."
-		print "Assigning pairwise features..."
+		print("Stoping pool...")
+		print("Assigning pairwise features...")
 		for d in dicts_:
 			self.PairWiseFeature.update(d[0])
 			self.Avgdl[d[1].keys()[0]] = d[1][d[1].keys()[0]]
@@ -155,4 +155,4 @@ class Corpus:
 		
 		for idx in range(len(self.QPerItem)):
 			self.QPerItem[idx] = list(filter(lambda x: x not in empty_items, self.QPerItem[idx]))
-		print "Pairwise features created\n\n"
+		print("Pairwise features created\n\n")
